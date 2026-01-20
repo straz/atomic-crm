@@ -1,9 +1,12 @@
-import { useGetIdentity, useListContext } from "ra-core";
+import jsonExport from "jsonexport/dist";
+import { downloadCSV, useGetIdentity, useListContext, type Exporter } from "ra-core";
 import { List } from "@/components/admin/list";
+import { ExportButton } from "@/components/admin/export-button";
 import { SortButton } from "@/components/admin/sort-button";
 import { Card } from "@/components/ui/card";
 
 import { TopToolbar } from "../layout/TopToolbar";
+import type { Lead } from "../types";
 import { LeadListContent } from "./LeadListContent";
 import { LeadListFilter } from "./LeadListFilter";
 
@@ -18,6 +21,7 @@ export const LeadList = () => {
       actions={<LeadListActions />}
       perPage={25}
       sort={{ field: "created_at", order: "DESC" }}
+      exporter={exporter}
     >
       <LeadListLayout />
     </List>
@@ -49,8 +53,39 @@ const LeadListLayout = () => {
 const LeadListActions = () => (
   <TopToolbar>
     <SortButton fields={["name", "email", "created_at", "concern_level"]} />
+    <ExportButton />
   </TopToolbar>
 );
+
+const exporter: Exporter<Lead> = async (leads) => {
+  const leadsForExport = leads.map((lead) => ({
+    id: lead.id,
+    name: lead.name,
+    email: lead.email,
+    title: lead.title || "",
+    organization: lead.organization || "",
+    comments: lead.comments || "",
+    selected_cards: lead.selected_cards?.map((c) => c.name).join("; ") || "",
+    ai_characteristics: lead.ai_characteristics?.join("; ") || "",
+    ai_characteristics_other: lead.ai_characteristics_other || "",
+    ai_providers: lead.ai_providers?.join("; ") || "",
+    ai_providers_other: lead.ai_providers_other || "",
+    concern_level: lead.concern_level || "",
+    who_concerned: lead.who_concerned?.join("; ") || "",
+    who_concerned_other: lead.who_concerned_other || "",
+    status: lead.status,
+    created_at: lead.created_at,
+    converted_to_contact_id: lead.converted_to_contact_id || "",
+  }));
+
+  jsonExport(leadsForExport, { rowDelimiter: "," }, (err, csv) => {
+    if (err) {
+      console.error("Export error:", err);
+      return;
+    }
+    downloadCSV(csv, "leads");
+  });
+};
 
 const LeadEmpty = () => (
   <div className="flex flex-col items-center justify-center h-64 text-center">
