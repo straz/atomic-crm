@@ -104,6 +104,9 @@ importers:
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      node-polyglot:
+        specifier: ^2.6.0
+        version: 2.6.0
       papaparse:
         specifier: ^5.5.3
         version: 5.5.3
@@ -155,6 +158,9 @@ importers:
       rollup-plugin-visualizer:
         specifier: ^6.0.5
         version: 6.0.5(rollup@4.55.2)
+      scheduler:
+        specifier: ^0.27.0
+        version: 0.27.0
       sonner:
         specifier: ^2.0.7
         version: 2.0.7(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
