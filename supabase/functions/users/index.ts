@@ -175,15 +175,26 @@ Deno.serve(async (req: Request) => {
     });
   }
 
-  const authHeader = req.headers.get("Authorization")!;
+  const authHeader = req.headers.get("Authorization");
+  console.log("Auth header present:", !!authHeader);
+  console.log("SUPABASE_URL:", Deno.env.get("SUPABASE_URL"));
+  console.log("SUPABASE_ANON_KEY present:", !!Deno.env.get("SUPABASE_ANON_KEY"));
+
+  if (!authHeader) {
+    console.log("No auth header");
+    return createErrorResponse(401, "No Authorization header");
+  }
+
   const localClient = createClient(
     Deno.env.get("SUPABASE_URL") ?? "",
     Deno.env.get("SUPABASE_ANON_KEY") ?? "",
     { global: { headers: { Authorization: authHeader } } },
   );
-  const { data } = await localClient.auth.getUser();
+  const { data, error: authError } = await localClient.auth.getUser();
+  console.log("Auth result - user:", !!data?.user, "error:", authError?.message);
+
   if (!data?.user) {
-    return createErrorResponse(401, "Unauthorized");
+    return createErrorResponse(401, authError?.message || "Unauthorized");
   }
   const currentUserSale = await supabaseAdmin
     .from("sales")
