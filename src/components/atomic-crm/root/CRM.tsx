@@ -16,6 +16,7 @@ import companies from "../companies";
 import contacts from "../contacts";
 import { Dashboard } from "../dashboard/Dashboard";
 import deals from "../deals";
+import leads from "../leads";
 import { Layout } from "../layout/Layout";
 import { SignupPage } from "../login/SignupPage";
 import {
@@ -156,6 +157,7 @@ export const CRM = ({
           <Route path={SettingsPage.path} element={<SettingsPage />} />
         </CustomRoutes>
         <Resource name="deals" {...deals} />
+        <Resource name="leads" {...leads} />
         <Resource name="contacts" {...contacts} />
         <Resource name="companies" {...companies} />
         <Resource name="contactNotes" />

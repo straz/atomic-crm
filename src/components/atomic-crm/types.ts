@@ -152,6 +152,25 @@ export type Task = {
   sales_id?: Identifier;
 } & Pick<RaRecord, "id">;
 
+export type Lead = {
+  created_at: string;
+  name: string;
+  email: string;
+  title: string | null;
+  organization: string | null;
+  comments: string | null;
+  selected_cards: { id: string; name: string }[] | null;
+  ai_characteristics: string[] | null;
+  ai_characteristics_other: string | null;
+  ai_providers: string[] | null;
+  ai_providers_other: string | null;
+  concern_level: number | null;
+  who_concerned: string[] | null;
+  who_concerned_other: string | null;
+  status: "new" | "contacted" | "qualified" | "converted" | "archived";
+  converted_to_contact_id: Identifier | null;
+} & Pick<RaRecord, "id">;
+
 export type ActivityCompanyCreated = {
   type: typeof COMPANY_CREATED;
   company_id: Identifier;

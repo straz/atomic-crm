@@ -328,6 +328,14 @@ export const dataProvider = withLifecycleCallbacks(
         return applyFullTextSearch(["name", "type", "description"])(params);
       },
     },
+    {
+      resource: "leads",
+      beforeGetList: async (params) => {
+        return applyFullTextSearch(["name", "email", "organization", "title"])(
+          params,
+        );
+      },
+    },
   ],
 );
 
