@@ -331,9 +331,23 @@ export const dataProvider = withLifecycleCallbacks(
     {
       resource: "leads",
       beforeGetList: async (params) => {
-        return applyFullTextSearch(["name", "email", "organization", "title"])(
-          params,
-        );
+        // Leads uses simple ilike search (no _fts columns)
+        if (!params.filter?.q) {
+          return params;
+        }
+        const { q, ...filter } = params.filter;
+        return {
+          ...params,
+          filter: {
+            ...filter,
+            "@or": {
+              "name@ilike": q,
+              "email@ilike": q,
+              "organization@ilike": q,
+              "title@ilike": q,
+            },
+          },
+        };
       },
     },
   ],
