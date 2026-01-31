@@ -1,4 +1,4 @@
-import { Mail, Building2, Briefcase, Calendar, AlertTriangle } from "lucide-react";
+import { Mail, Building2, Briefcase, Calendar, AlertTriangle, Megaphone } from "lucide-react";
 import { useRecordContext } from "ra-core";
 import { DateField } from "@/components/admin/date-field";
 import { Badge } from "@/components/ui/badge";
@@ -40,6 +40,15 @@ export const LeadAside = () => {
           </div>
         )}
       </AsideSection>
+
+      {record.campaign && (
+        <AsideSection title="Campaign">
+          <div className="flex items-center gap-2">
+            <Megaphone className="w-4 h-4 text-muted-foreground" />
+            <span className="font-medium">{record.campaign}</span>
+          </div>
+        </AsideSection>
+      )}
 
       {record.concern_level && (
         <AsideSection title="Concern Level">

@@ -4,7 +4,7 @@ import {
   startOfWeek,
   subMonths,
 } from "date-fns";
-import { AlertTriangle, Calendar, TrendingUp } from "lucide-react";
+import { Calendar, TrendingUp, Megaphone } from "lucide-react";
 import { FilterLiveForm } from "ra-core";
 import { ToggleFilterButton } from "@/components/admin/toggle-filter-button";
 import { SearchInput } from "@/components/admin/search-input";
@@ -16,7 +16,7 @@ export const LeadListFilter = () => {
   return (
     <div className="w-52 min-w-52 order-first pt-0.75 flex flex-col gap-4">
       <FilterLiveForm>
-        <SearchInput source="q" placeholder="Search name, email..." />
+        <SearchInput source="q" placeholder="Search name, email, campaign..." />
       </FilterLiveForm>
 
       <FilterCategory label="Status" icon={<TrendingUp />}>
@@ -34,15 +34,10 @@ export const LeadListFilter = () => {
         ))}
       </FilterCategory>
 
-      <FilterCategory label="Concern Level" icon={<AlertTriangle />}>
-        {[5, 4, 3, 2, 1].map((level) => (
-          <ToggleFilterButton
-            key={level}
-            className="w-full justify-between"
-            label={`Level ${level}`}
-            value={{ concern_level: level }}
-          />
-        ))}
+      <FilterCategory label="Campaign" icon={<Megaphone />}>
+        <FilterLiveForm>
+          <SearchInput source="campaign" placeholder="Filter by campaign..." />
+        </FilterLiveForm>
       </FilterCategory>
 
       <FilterCategory label="Date Added" icon={<Calendar />}>

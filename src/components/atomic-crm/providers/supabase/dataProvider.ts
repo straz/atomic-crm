@@ -345,6 +345,7 @@ export const dataProvider = withLifecycleCallbacks(
               "email@ilike": q,
               "organization@ilike": q,
               "title@ilike": q,
+              "campaign@ilike": q,
             },
           },
         };

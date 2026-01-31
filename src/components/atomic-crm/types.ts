@@ -153,6 +153,7 @@ export type Task = {
 } & Pick<RaRecord, "id">;
 
 export type Lead = {
+  lid: string;  // 10-char nanoid
   created_at: string;
   name: string;
   email: string;
@@ -169,6 +170,7 @@ export type Lead = {
   who_concerned_other: string | null;
   status: "new" | "contacted" | "qualified" | "converted" | "archived";
   converted_to_contact_id: Identifier | null;
+  campaign: string | null;
 } & Pick<RaRecord, "id">;
 
 export type ActivityCompanyCreated = {
