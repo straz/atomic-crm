@@ -11,6 +11,7 @@ import { SearchInput } from "@/components/admin/search-input";
 
 import { FilterCategory } from "../filters/FilterCategory";
 import { LeadStatusBadge, LEAD_STATUS_LIST } from "./LeadStatusBadge";
+import { CampaignFilter } from "./CampaignFilter";
 
 export const LeadListFilter = () => {
   return (
@@ -35,9 +36,7 @@ export const LeadListFilter = () => {
       </FilterCategory>
 
       <FilterCategory label="Campaign" icon={<Megaphone />}>
-        <FilterLiveForm>
-          <SearchInput source="campaign" placeholder="Filter by campaign..." />
-        </FilterLiveForm>
+        <CampaignFilter />
       </FilterCategory>
 
       <FilterCategory label="Date Added" icon={<Calendar />}>

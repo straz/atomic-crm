@@ -231,6 +231,22 @@ const dataProviderWithCustomMethods = {
 
     return data;
   },
+  async getDistinctCampaigns(): Promise<string[]> {
+    const { data, error } = await supabase
+      .from("leads")
+      .select("campaign")
+      .not("campaign", "is", null)
+      .order("campaign");
+
+    if (error) {
+      console.error("getDistinctCampaigns.error", error);
+      throw new Error("Failed to fetch campaigns");
+    }
+
+    // Get unique campaigns
+    const campaigns = [...new Set(data.map((row) => row.campaign as string))];
+    return campaigns;
+  },
 } satisfies DataProvider;
 
 export type CrmDataProvider = typeof dataProviderWithCustomMethods;
